@@ -4,8 +4,9 @@
 import 'dart:async';
 
 import 'package:qrreaderapp/src/providers/db_provider.dart';
+import 'package:qrreaderapp/src/bloc/validator.dart';
 
-class ScansBolc{
+class ScansBolc with Validator{
 
 
   static final ScansBolc _singleton = new ScansBolc._internal();
@@ -20,8 +21,8 @@ class ScansBolc{
 
   final _scansController = StreamController<List<ScanModel>>.broadcast();
 
-  Stream<List<ScanModel>> get scansStream => _scansController.stream;
-
+  Stream<List<ScanModel>> get scansStream => _scansController.stream.transform(validatorGeo);
+  Stream<List<ScanModel>> get scansStreamHttp => _scansController.stream.transform(validatorHttp); 
   dispose(){
     _scansController?.close();
   }

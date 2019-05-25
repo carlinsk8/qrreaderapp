@@ -91,30 +91,22 @@ class _HomePageState extends State<HomePage> {
     //https://fernando-herrera.com
     //geo:40.72735525448057,-73.89882460078127
 
-    String futureString = 'https://fernando-herrera.com';
-    // try {
-    //   futureString = await new QRCodeReader().scan();
-    // } catch (e) {
-    //   futureString =e.toString();
-    // }
-
-
+    String futureString;
+    try {
+      futureString = await new QRCodeReader().scan();
+    } catch (e) {
+      futureString =e.toString();
+    }
+    
     if(futureString != null){
       final scan = ScanModel(valor: futureString);
       scansBloc.addScan(scan);
-
-      final scan2 = ScanModel(valor: 'geo:40.72735525448057,-73.89882460078127');
-      scansBloc.addScan(scan2);
 
       if(Platform.isIOS){
         Future.delayed(Duration(milliseconds: 750));
       }else{
         utils.launchURL(scan, context);
       }
-
-      
-
-
     }
     
   }
